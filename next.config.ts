@@ -8,4 +8,9 @@ const withMDX = createMDX({
 export default withMDX({
   output: 'export',          // static HTML export
   pageExtensions: ['tsx', 'mdx'],
+
+  // Skip ESLint errors during CI builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 });

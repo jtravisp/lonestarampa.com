@@ -57,12 +57,14 @@ export default function Footer() {
             <div>
               <h3 className="font-bold text-odgreen mb-3">36th Infantry Division Band</h3>
               <p className="text-sm text-gray-600 mb-2">
-                "Duty, Honor, Texas" - Texans serving Texas since 1937
+                &quot;Duty, Honor, Texas&quot; – Texans serving Texas since 1937
               </p>
               <div className="flex items-center gap-3">
                 <img 
                   src="/arrowhead.png" 
                   alt="36th Infantry Division" 
+                  width={160}
+                  height={160}
                   className="h-12 w-auto opacity-60"
                 />
                 <div className="text-xs text-gray-500">
