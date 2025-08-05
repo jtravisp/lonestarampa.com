@@ -1,4 +1,5 @@
 'use client';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
 type Guide = {
@@ -13,7 +14,7 @@ export default function InstrumentTabs({ guides }: { guides: Guide[] }) {
   return (
     <section className="mt-12">
       {/* selector bar */}
-      <div className="not-prose flex flex-wrap gap-4 mb-10 overflow-x-auto sm:justify-center py-4">
+      <div className="flex flex-wrap gap-4 mb-10 overflow-x-auto sm:justify-center py-4">
         {guides.map(({ slug, title }) => {
           const selected = slug === active;
 
@@ -22,23 +23,18 @@ export default function InstrumentTabs({ guides }: { guides: Guide[] }) {
               key={slug}
               onClick={() => setActive(slug)}
               className={[
-                /* core pill shape & font */
-                'px-8 py-4 rounded-full text-2xl font-semibold min-h-[4rem]',
-                'flex items-center justify-center leading-tight',
-
-                /* subtle gradient base + shadow */
-                'bg-gradient-to-b from-white/90 to-white shadow-md',
-
-                /* motion / glow on hover + focus */
-                'transition-all duration-150',
-                'hover:shadow-lg hover:scale-105 hover:ring-2 hover:ring-odgreen/40',
-                'active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-odgreen/60',
-                'hover:drop-shadow-sm',
-
-                /* selected vs idle palette */
+                'inline-flex items-center justify-center gap-2',
+                'px-8 py-4 rounded-full text-xl font-semibold min-h-[3.5rem]',
+                'transition-all duration-150 shadow-sm hover:shadow-lg',
+                // ✦ solid fill & border
+                'bg-amber-100 border border-odgreen/30',
+                // motion & ring
+                'hover:scale-[1.06] hover:ring-2 hover:ring-tpatch/40',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tpatch/60',
+                // selected
                 selected
-                  ? 'bg-odgreen text-yellow-100 ring-2 ring-odgreen shadow-lg translate-y-[-2px]'
-                  : 'text-gray-800 border border-gray-300 hover:text-odgreen',
+                  ? 'bg-odgreen text-yellow-100 ring-2 ring-odgreen translate-y-[-2px] shadow-lg'
+                  : 'text-odgreen',
               ].join(' ')}
             >
               {title}
@@ -47,14 +43,23 @@ export default function InstrumentTabs({ guides }: { guides: Guide[] }) {
         })}
       </div>
 
-      {/* active guide content */}
-      {guides.map(({ slug, element }) =>
-        slug === active ? (
-          <article key={slug} className="prose lg:prose-lg max-w-none">
-            {element}
-          </article>
-        ) : null
-      )}
+         {/* animated content */}
+         <AnimatePresence mode="wait">
+        {guides.map(({ slug, element }) =>
+          slug === active ? (
+            <motion.article
+              key={slug}
+              className="prose lg:prose-lg max-w-none"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
+              {element}
+            </motion.article>
+          ) : null
+        )}
+      </AnimatePresence>
     </section>
   );
 }

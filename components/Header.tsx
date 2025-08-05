@@ -23,7 +23,7 @@ export default function Header() {
         <img
           src="/arrowhead.png"
           alt="36th Infantry Division Crest"
-          className="h-24 w-auto drop-shadow-2xl sm:h-32 md:h-40 filter brightness-110"
+          className="h-24 sm:h-32 md:h-40 animate-[float_6s_ease-in-out_infinite] drop-shadow-2xl"
         />
 
         {/* title */}
